@@ -51,22 +51,31 @@ public class MainActivity extends AppCompatActivity {
                 if(( currentState[winningCombination[0]] == currentState[winningCombination[1]] &&
                         currentState[winningCombination[1]] == currentState[winningCombination[2]] &&
                         currentState[winningCombination[0]] != 2 )) {
-                    gameEnd(player);
+                    gameEnd(player + " Won!");
                 }
                 else{
-                    
+                    boolean gameOver = true;
+
+                    for(int state : currentState){
+                        if(state == 2)
+                            gameOver = false;
+                    }
+
+                    if(gameOver){
+                        gameEnd("Game Tied!");
+                    }
                 }
             }
         }
     }
 
-    public void gameEnd(String team){
+    public void gameEnd(String text){
         linearLayout = (LinearLayout) findViewById(R.id.new_game_layout);
         gameWonText = (TextView) findViewById(R.id.team_won_text);
 
         linearLayout.setVisibility(View.VISIBLE);
         gameActive = false;
-        gameWonText.setText(team + " Won!");
+        gameWonText.setText(text);
 
     }
 
