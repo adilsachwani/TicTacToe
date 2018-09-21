@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     TextView gameWonText;
     android.support.v7.widget.GridLayout gridLayout;
     boolean gameActive = true;
+    boolean gameTied = true;
 
     public void play(View view){
 
@@ -51,19 +52,21 @@ public class MainActivity extends AppCompatActivity {
                 if(( currentState[winningCombination[0]] == currentState[winningCombination[1]] &&
                         currentState[winningCombination[1]] == currentState[winningCombination[2]] &&
                         currentState[winningCombination[0]] != 2 )) {
+                    gameTied = false;
                     gameEnd(player + " Won!");
                 }
-                else{
-                    boolean gameOver = true;
+            }
 
-                    for(int state : currentState){
-                        if(state == 2)
-                            gameOver = false;
-                    }
+            if(gameTied){
+                boolean gameOver = true;
 
-                    if(gameOver){
-                        gameEnd("Game Tied!");
-                    }
+                for(int state : currentState){
+                    if(state == 2)
+                        gameOver = false;
+                }
+
+                if(gameOver){
+                    gameEnd("Game Tied!");
                 }
             }
         }
@@ -76,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
         linearLayout.setVisibility(View.VISIBLE);
         gameActive = false;
         gameWonText.setText(text);
-
     }
 
     public  void playAgain(View view){
 
         gameActive = true;
+        gameTied = true;
         gridLayout = (android.support.v7.widget.GridLayout) findViewById(R.id.grid_layout);
         linearLayout.setVisibility(View.INVISIBLE);
         currentPlayer = 0;
@@ -97,6 +100,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
     }
 }
